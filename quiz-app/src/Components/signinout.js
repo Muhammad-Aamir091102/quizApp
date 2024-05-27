@@ -1,6 +1,5 @@
-import React from 'react';
-import { useState } from 'react';
-import './style.css'; // Assuming you have the CSS file in the same directory as your component
+import React, { useState } from 'react';
+import './style.css'; // Import your CSS file
 
 function SignInSignUp() {
     const [signInFormData, setSignInFormData] = useState({
@@ -13,6 +12,8 @@ function SignInSignUp() {
         email: '',
         password: ''
     });
+
+    const [isSignUpMode, setIsSignUpMode] = useState(false);
 
     const handleSignInFormChange = (e) => {
         const { name, value } = e.target;
@@ -36,10 +37,14 @@ function SignInSignUp() {
         console.log("Sign Up Form Data:", signUpFormData);
     };
 
+    const toggleSignUpMode = () => {
+        setIsSignUpMode(!isSignUpMode);
+    };
+
     return (
-        <div className="container">
+        <div className={`container ${isSignUpMode ? 'sign-up-mode' : ''}`}>
             <div className="signin-signup">
-                <form onSubmit={handleSignInSubmit} className="sign-in-form">
+                <form onSubmit={handleSignInSubmit} className={`sign-in-form ${isSignUpMode ? 'hidden' : ''}`}>
                     <h2 className="title">Sign in</h2>
                     <div className="input-field">
                         <i className="fas fa-user"></i>
@@ -50,13 +55,9 @@ function SignInSignUp() {
                         <input type="password" placeholder="Password" name="password" value={signInFormData.password} onChange={handleSignInFormChange} required />
                     </div>
                     <input type="submit" value="Login" className="btn" />
-                    <p className="social-text">Or Sign in with social platforms</p>
-                    <div className="social-media">
-                        {/* Social media icons */}
-                    </div>
-                    <p className="account-text">Don't have an account <a href="#" id="sign-up-btn2">Sign Up</a></p>
+                    <p className="account-text">Don't have an account <a href="#" onClick={toggleSignUpMode}>Sign Up</a></p>
                 </form>
-                <form onSubmit={handleSignUpSubmit} className="sign-up-form">
+                <form onSubmit={handleSignUpSubmit} className={`sign-up-form ${isSignUpMode ? '' : 'hidden'}`}>
                     <h2 className="title">Sign up</h2>
                     <div className="input-field">
                         <i className="fas fa-user"></i>
@@ -71,30 +72,8 @@ function SignInSignUp() {
                         <input type="password" placeholder="Password" name="password" value={signUpFormData.password} onChange={handleSignUpFormChange} required />
                     </div>
                     <input type="submit" value="Sign up" className="btn" />
-                    <p className="social-text">Or Sign in with social platforms</p>
-                    <div className="social-media">
-                        {/* Social media icons */}
-                    </div>
-                    <p className="account-text">Already have an account <a href="#" id="sign-in-btn2">Sign In</a></p>
+                    <p className="account-text">Already have an account <a href="#" onClick={toggleSignUpMode}>Sign In</a></p>
                 </form>
-            </div>
-            <div className="panels-container">
-                <div className="panel left-panel">
-                    <div className="content">
-                        <h3>Quiz App</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo fugit adipisci sequi doloremque error culpa repellendus beatae quibusdam excepturi ipsum illum consectetur nihil, maiores recusandae voluptatum autem maxime vel.</p>
-                        <button className="btn" id="sign-in-btn">Sign in</button>
-                    </div>
-                    <img src="1.svg.svg" alt="" className="image" />
-                </div>
-                <div className="panel right-panel">
-                    <div className="content">
-                        <h3>Solve the Quiz Online</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis nemo fugit adipisci sequi doloremque error culpa repellendus beatae quibusdam excepturi ipsum illum consectetur nihil, maiores recusandae voluptatum autem maxime vel.</p>
-                        <button className="btn" id="sign-up-btn">Sign up</button>
-                    </div>
-                    <img src="2.svg.svg" alt="" className="image" />
-                </div>
             </div>
         </div>
     );
